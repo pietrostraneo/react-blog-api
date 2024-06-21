@@ -4,12 +4,14 @@ import tagStyle from './Tag.module.scss'
 
 export default function Tag() {
 
+    const Api = import.meta.env.VITE_API_URL;
+
     const [tag, setTag] = useState([]);
 
     useEffect(() => {
         async function fetchTag() {
             try {
-                let response = await axios.get('http://localhost:3000/tags');
+                let response = await axios.get(`${Api}/tags`);
                 let data = response.data;
                 setTag(data);
             } catch (error) {

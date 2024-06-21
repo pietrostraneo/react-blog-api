@@ -1,9 +1,13 @@
 import loginStyle from './Login.module.scss'
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import axios from 'axios';
+import { Link, redirect, useNavigate } from 'react-router-dom'
+import axios from '../../apiClient';
 
 export default function Login() {
+
+    const Api = import.meta.env.VITE_API_URL
+
+    const navigate = useNavigate();
+
     const handleSubmit = async (event) => {
         event.preventDefault(); // Previene il comportamento di default del form
 
@@ -13,9 +17,19 @@ export default function Login() {
         };
 
         try {
-            const response = await axios.post('http://localhost:3000/auth/login', formData);
+            const response = await axios.post(`${Api}/auth/login`, formData);
 
             console.log('Login success:', response.data);
+
+            if (response) {
+
+                const test = JSON.stringify(response.data.data)
+
+                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('user', test);
+                window.location.href = '/'
+
+            }
             // Gestisci la risposta o reindirizza l'utente alla dashboard, ecc.
         } catch (error) {
             console.error('Error during login:', error);

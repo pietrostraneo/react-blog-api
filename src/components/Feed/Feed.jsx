@@ -5,6 +5,7 @@ import Tag from '../Tag/Tag.jsx'
 import Loader from '../Loader/Loader.jsx';
 import axios from 'axios';
 
+const Api = import.meta.env.VITE_API_URL;
 
 import CardPost from '../CardPost/CardPost';
 
@@ -14,7 +15,7 @@ export default function Feed() {
     useEffect(() => {
         async function fetchPost() {
             try {
-                let response = await axios.get('http://localhost:3000/posts');
+                let response = await axios.get(`${Api}/posts`);
                 let { data } = response.data;
                 setPost(data);
             } catch (error) {
