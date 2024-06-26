@@ -38,8 +38,9 @@ export default function Header() {
                             <li><i className={`fas fa-magnifying-glass ${styleHeader.buttons}`}></i></li>
                             <li><Link to="/saved" className='text-white text-decoration-none'><i className={`fas fa-bookmark ${styleHeader.buttons}`}></i></Link></li>
                             {loginStatus ? (<>
+                                <li><Link to="/create" className='text-white text-decoration-none'><i className={`fas fa-plus ${styleHeader.buttons}`}></i></Link></li>
                                 <li className='position-relative'>
-                                    <img src={user.image} alt={user.username} className={`img-fluid ${styleHeader.profile_pic}`} onClick={() => {
+                                    <img src={user.image || 'https://i.pravatar.cc/300'} alt={user.username} className={`img-fluid ${styleHeader.profile_pic}`} onClick={() => {
                                         handleDropdown()
                                     }} />
                                     {drop ? (<>

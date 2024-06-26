@@ -20,7 +20,6 @@ export default function Tag() {
         }
 
         fetchTag();
-        console.log(tag)
     }, []);
 
     return (

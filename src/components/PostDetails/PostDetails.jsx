@@ -1,16 +1,26 @@
 import postStyle from './PostDetails.module.scss'
-import { useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { Link } from "react-router-dom";
-import { MdEditNote, MdDelete } from "react-icons/md";
-import axios from 'axios'
+import { MdEditNote, MdDelete, MdArrowBackIosNew } from "react-icons/md";
+import axios from '../../apiClient.js'
 
 export default function PostDetails() {
     const { slug } = useParams()
     const [post, setPost] = useState(null)
 
+    const navigate = useNavigate();
+
     const userData = localStorage.getItem('user')
     const user = userData ? JSON.parse(userData) : null
+
+    const handleBack = () => {
+        navigate(`/`);
+    }
+
+    const handleEdit = () => {
+        navigate(`/edit/${slug}`);
+    }
 
 
     useEffect(() => {
@@ -35,9 +45,9 @@ export default function PostDetails() {
         return formattedDate
     }
 
-    async function deletePost(id) {
+    async function deletePost(slug) {
         try {
-            await axios.delete(`http://localhost:3000/posts/${slug}`);
+            await axios.delete(`http://localhost:3000/posts/${slug}`,);
             window.location.href('/');
         } catch (error) {
             console.error('Error deleting post:', error);
@@ -51,7 +61,7 @@ export default function PostDetails() {
                     <div className="container">
                         <div className="row mt-5 justify-content-center text-white">
 
-                            <div className="col-12 col-md-8">
+                            <div className="col-12 col-md-8 pb-5">
                                 <article>
 
                                     <section className='d-flex justify-content-between'>
@@ -61,16 +71,19 @@ export default function PostDetails() {
                                             <p className={`${postStyle.sub_color}`}>{getFormattedDate(post)}</p>
                                         </div>
 
-                                        {user && post.User.username === user.username && (
-                                            <div className="buttons">
-                                                <Link to={`/edit/${slug}`} className={`mx-2 ${postStyle.buttons}`}><MdEditNote /></Link>
-                                                <button onClick={() => deletePost(post.id)} className={`${postStyle.buttons}`}><MdDelete /></button>
-                                            </div>
-                                        )}
+                                        <div className="buttons d-flex gap-2">
+                                            <MdArrowBackIosNew className={`${postStyle.buttons}`} onClick={handleBack} />
+                                            {user && post.User.username === user.username && (<>
+
+                                                <MdEditNote onClick={handleEdit} className={`${postStyle.buttons}`} />
+                                                <MdDelete onClick={() => deletePost(post.slug)} className={`${postStyle.buttons}`} />
+                                            </>
+                                            )}
+                                        </div>
                                     </section>
 
                                     <figure>
-                                        <img src={post.image} alt="" className='img-fluid' />
+                                        <img src={post.image ? `http://localhost:3000/uploads/posts/${post.image}` : `${post.image}`} alt={post.title} className='img-fluid' />
                                     </figure>
 
                                     <section>

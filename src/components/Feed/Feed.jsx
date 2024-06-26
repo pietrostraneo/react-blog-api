@@ -17,14 +17,14 @@ export default function Feed() {
             try {
                 let response = await axios.get(`${Api}/posts`);
                 let { data } = response.data;
-                setPost(data);
+                let publishedPost = data.filter(d => d.published === true)
+                setPost(publishedPost);
             } catch (error) {
                 console.error('Errore durante il fetch dei post:', error);
             }
         }
 
         fetchPost();
-        console.log(post)
     }, []);
 
     return (

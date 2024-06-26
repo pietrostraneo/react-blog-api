@@ -6,8 +6,6 @@ export default function Login() {
 
     const Api = import.meta.env.VITE_API_URL
 
-    const navigate = useNavigate();
-
     const handleSubmit = async (event) => {
         event.preventDefault(); // Previene il comportamento di default del form
 
@@ -18,8 +16,6 @@ export default function Login() {
 
         try {
             const response = await axios.post(`${Api}/auth/login`, formData);
-
-            console.log('Login success:', response.data);
 
             if (response) {
 

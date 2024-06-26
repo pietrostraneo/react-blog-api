@@ -1,4 +1,5 @@
 import styleDrop from './Dropdown.module.scss'
+import { Link, NavLink } from "react-router-dom";
 
 export default function Dropdown() {
 
@@ -12,7 +13,7 @@ export default function Dropdown() {
         <>
             <div className={`${styleDrop.drop}`}>
                 <ul>
-                    <li><button>Profile</button></li>
+                    <li><NavLink to="/profile"><button>Profile</button></NavLink></li>
                     <li><button onClick={() => {
                         handleLogout()
                     }}>Logout</button></li>

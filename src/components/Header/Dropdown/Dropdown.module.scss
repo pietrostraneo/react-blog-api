@@ -2,7 +2,7 @@
     position: absolute;
     top: 120%;
     border: 1px solid white;
-    border-radius: 12px;
+    border-radius: 12px 0;
     background-color: black;
 
     ul {
@@ -14,7 +14,7 @@
         background-color: black;
         color: white;
         border: none;
-        border-radius: 12px;
+        border-radius: 12px 0;
         padding: 1rem;
         width: 100%;
         transition: all 0.3s ease-in;
